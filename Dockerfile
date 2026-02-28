@@ -56,6 +56,9 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copier le reste du code source
 COPY . .
 
+# S'assurer que le dossier prisma existe (même vide)
+RUN mkdir -p prisma
+
 # Variables d'environnement pour le build
 ENV NEXT_TELEMETRY_DISABLED=1 \
     NODE_ENV=production
