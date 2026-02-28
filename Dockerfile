@@ -103,7 +103,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/scripts ./scripts
 
 # Copier le schema Prisma si présent
-COPY --from=builder /app/prisma ./prisma 2>/dev/null || true
+COPY --from=builder /app/prisma ./prisma
 
 # Créer les répertoires nécessaires avec les bonnes permissions
 RUN mkdir -p uploads/images uploads/screenshots && \
