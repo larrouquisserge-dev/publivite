@@ -10,8 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "worker": "PLAYWRIGHT_BROWSERS_PATH=/home/ubuntu/.playwright-browsers npx tsx scripts/start-worker.ts",
-    "worker:dev": "PLAYWRIGHT_BROWSERS_PATH=/home/ubuntu/.playwright-browsers npx tsx --watch scripts/start-worker.ts"
+    "worker": "node scripts/start-worker.js",
+    "worker:dev": "npx tsx --watch scripts/start-worker.ts"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",
