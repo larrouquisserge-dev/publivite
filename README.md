@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Publivite - Gestionnaire d'annonces Leboncoin
 
-## Getting Started
+Application web pour gérer et publier automatiquement des annonces sur Leboncoin.
 
-First, run the development server:
+## Fonctionnalités
+
+- ✅ Gestion d'annonces (78 catégories Leboncoin)
+- ✅ Formulaires dynamiques avec champs conditionnels
+- ✅ Galerie d'images
+- ✅ Gestion de comptes Leboncoin multiples
+- ✅ Publication automatique sur Leboncoin (Playwright)
+- ✅ Tâches planifiées (immédiates, programmées, récurrentes)
+- ✅ Historique des publications
+- ✅ Statistiques avancées avec graphiques
+- ✅ Système de crédits
+- ✅ Interface moderne et responsive
+
+## Technologies
+
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS v4
+- PostgreSQL + Prisma
+- Redis + Bull/BullMQ
+- Playwright
+- Zustand (state management)
+
+## Installation locale
 
 ```bash
+# Installer les dépendances
+npm install
+
+# Configurer les variables d'environnement
+cp .env.example .env
+# Éditer .env avec vos configurations
+
+# Initialiser la base de données
+npx prisma generate
+npx prisma db push
+
+# Démarrer l'application
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Démarrer le worker (dans un autre terminal)
+npm run worker
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Déploiement sur Railway
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Pousser le code sur GitHub
+2. Créer un projet Railway
+3. Ajouter PostgreSQL et Redis
+4. Configurer les variables d'environnement
+5. Créer un service Worker séparé
+6. Déployer !
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Variables d'environnement
 
-## Learn More
+Voir `.env.example` pour la liste complète.
 
-To learn more about Next.js, take a look at the following resources:
+## Licence
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Propriétaire
