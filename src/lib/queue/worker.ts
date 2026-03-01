@@ -6,7 +6,7 @@
  */
 
 import { Worker, Job } from 'bullmq';
-import { QUEUE_NAMES, TASK_STATUS } from './config';
+import { QUEUE_NAMES, TASK_STATUS , getRedisConfig} from './config';
 import { TaskData, TaskResult } from './types';
 import { updateTaskStatus } from './queue-manager';
 
@@ -21,13 +21,8 @@ import {
   DEFAULT_RATE_LIMIT,
 } from '../leboncoin';
 
-// Configuration de connexion Redis
-const REDIS_CONFIG = {
-  host: process.env.REDIS_HOST || 'localhost',
-  port: parseInt(process.env.REDIS_PORT || '6379'),
-  password: process.env.REDIS_PASSWORD || undefined,
-  maxRetriesPerRequest: null,
-};
+// Configuration de connexion Redis (utilise REDIS_URL si disponible)
+const REDIS_CONFIG = getRedisConfig();
 
 /**
  * Instance du worker (lazy initialization)
