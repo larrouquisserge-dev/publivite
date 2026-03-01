@@ -105,6 +105,9 @@ COPY --from=deps /app/node_modules ./node_modules
 # Copier les scripts worker
 COPY --from=builder /app/scripts ./scripts
 
+# Copier le code source du worker (nécessaire pour tsx)
+COPY --from=builder /app/src/lib ./src/lib
+
 # Copier le schema Prisma si présent
 COPY --from=builder /app/prisma ./prisma
 
