@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
 import { CATEGORIES, CATEGORY_GROUPS, getCategoryByValue, getAllFields, getConditionalFields, type Category, type FormField } from '@/data/categories';
 import { DynamicField } from './DynamicField';
+import { ImageUpload } from './ImageUpload';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -41,6 +42,7 @@ export function AdForm({ initialAd, mode = 'create' }: AdFormProps) {
   const [tagInput, setTagInput] = useState('');
   const [shipping, setShipping] = useState(initialAd?.shipping || false);
   const [attributes, setAttributes] = useState<Record<string, string | string[]>>(initialAd?.attributes || {});
+  const [images, setImages] = useState<string[]>(initialAd?.images || []);
   const [categorySearch, setCategorySearch] = useState('');
   const [showCategoryPicker, setShowCategoryPicker] = useState(false);
 
@@ -112,7 +114,7 @@ export function AdForm({ initialAd, mode = 'create' }: AdFormProps) {
       subCategory: subCategory || undefined,
       type: adType,
       tags,
-      images: initialAd?.images || [],
+      images,
       attributes,
       status,
       shipping,
@@ -347,15 +349,12 @@ export function AdForm({ initialAd, mode = 'create' }: AdFormProps) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center hover:border-orange-400 transition-colors cursor-pointer">
-                <ImagePlus className="mx-auto h-10 w-10 text-gray-400 mb-3" />
-                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Glissez vos photos ici ou cliquez pour parcourir
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  JPG, PNG ou WEBP • Max 10 photos • Max 5 Mo par photo
-                </p>
-              </div>
+              <ImageUpload
+                images={images}
+                onChange={setImages}
+                maxImages={10}
+                maxSizeMB={5}
+              />
             </CardContent>
           </Card>
         </div>
