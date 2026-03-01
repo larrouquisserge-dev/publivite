@@ -43,6 +43,7 @@ console.log('PUBLIVITE - Worker de publication');
 console.log('====================================');
 console.log('');
 console.log('Variables d\'environnement:');
+console.log(`  REDIS_URL: ${process.env.REDIS_URL ? '***défini***' : 'non défini'}`);
 console.log(`  REDIS_HOST: ${process.env.REDIS_HOST || 'localhost'}`);
 console.log(`  REDIS_PORT: ${process.env.REDIS_PORT || '6379'}`);
 console.log(`  PLAYWRIGHT_BROWSERS_PATH: ${process.env.PLAYWRIGHT_BROWSERS_PATH || '/home/ubuntu/.playwright-browsers'}`);
