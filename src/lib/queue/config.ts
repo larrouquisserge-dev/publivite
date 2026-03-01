@@ -5,14 +5,58 @@
  * Redis est utilisé comme backend pour la gestion des files d'attente de tâches.
  */
 
+/**
+ * Parse une URL Redis pour extraire host, port et password
+ * Format: redis://[:password@]host:port ou redis://user:password@host:port
+ */
+function parseRedisUrl(url: string): { host: string; port: number; password?: string } {
+  try {
+    const parsed = new URL(url);
+    return {
+      host: parsed.hostname,
+      port: parseInt(parsed.port) || 6379,
+      password: parsed.password || undefined,
+    };
+  } catch (error) {
+    console.error('Erreur lors du parsing de REDIS_URL:', error);
+    // Fallback sur les valeurs par défaut
+    return {
+      host: 'localhost',
+      port: 6379,
+      password: undefined,
+    };
+  }
+}
+
+/**
+ * Génère la configuration Redis
+ * Priorité: REDIS_URL > REDIS_HOST/REDIS_PORT/REDIS_PASSWORD
+ */
+function buildRedisConfig() {
+  // Si REDIS_URL est défini, on l'utilise en priorité (format Railway)
+  if (process.env.REDIS_URL) {
+    console.log('Configuration Redis via REDIS_URL');
+    const { host, port, password } = parseRedisUrl(process.env.REDIS_URL);
+    return {
+      host,
+      port,
+      password,
+      maxRetriesPerRequest: null as null,
+    };
+  }
+
+  // Sinon, on utilise les variables séparées
+  console.log('Configuration Redis via REDIS_HOST/PORT/PASSWORD');
+  return {
+    host: process.env.REDIS_HOST || 'localhost',
+    port: parseInt(process.env.REDIS_PORT || '6379'),
+    password: process.env.REDIS_PASSWORD || undefined,
+    maxRetriesPerRequest: null as null,
+  };
+}
+
 // Configuration de connexion Redis
-// En production, ces valeurs devraient venir de variables d'environnement
-export const REDIS_CONFIG = {
-  host: process.env.REDIS_HOST || 'localhost',
-  port: parseInt(process.env.REDIS_PORT || '6379'),
-  password: process.env.REDIS_PASSWORD || undefined,
-  maxRetriesPerRequest: null as null, // Important pour BullMQ
-};
+export const REDIS_CONFIG = buildRedisConfig();
 
 /**
  * Obtient la configuration Redis pour les queues
